@@ -17,10 +17,11 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/winterwell.utils"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/winterwell.web"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jtwitter"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/winterwell.bob"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jgeoplanet"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
