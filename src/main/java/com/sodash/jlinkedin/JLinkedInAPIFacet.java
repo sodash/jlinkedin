@@ -1,0 +1,74 @@
+package com.sodash.jlinkedin;
+
+import java.util.Collection;
+import java.util.Map;
+
+import winterwell.json.JSONObject;
+import winterwell.utils.StrUtils;
+import winterwell.utils.containers.ArrayMap;
+import winterwell.utils.containers.IOneShot;
+import winterwell.web.FakeBrowser;
+
+import com.sodash.jlinkedin.fields.FieldEnum;
+import com.sodash.jlinkedin.model.LIProfile;
+
+abstract class JLinkedInAPIFacet<SubType extends JLinkedInAPIFacet> implements IOneShot {
+	
+	private Map addStdParams(Map vars) {
+		if (vars==null) vars = new ArrayMap();
+		vars.put("format", "json");
+		return vars;
+	}
+
+	FakeBrowser fb = new FakeBrowser();
+
+	public LIProfile getMyProfile() {
+		return getProfile(null);
+	}
+
+	String getPage(String url, Map vars) {
+		assert jli.authToken != null;
+		// add auth header
+		fb.setRequestHeader("Authorization", "Bearer "+jli.authToken);
+		vars = addStdParams(vars);
+		String page = fb.getPage(url, vars);
+		return page;
+	}
+
+
+
+	public LIProfile getProfile(String id) {
+		if (id==null) id = "~";
+//		// TODO there's quite a few useful fields you can request! TODO a "get user" method, which tallies with what we
+//		// can handle in storePerson2
+//		Set<ProfileField> fields = new ArraySet(ProfileField.ID, 
+//				ProfileField.FIRST_NAME, ProfileField.LAST_NAME, ProfileField.SUMMARY, ProfileField.PICTURE_URL,
+//				ProfileField.DATE_OF_BIRTH);
+		
+		/*
+		 * LI can be a little slow to return this profile, even if the login is accepted. Give it 500ms
+		 * and try three times
+		 */
+		String fieldSel = "";
+		if (fields!=null) {
+			fieldSel = ":("+StrUtils.join(fields, ",")+")";
+		}
+		String json = getPage("https://api.linkedin.com/v1/people/"+id+fieldSel, null);		
+		JSONObject jobj = new JSONObject(json);
+		return new LIProfile(jobj);
+	}
+	
+	JLinkedIn jli;
+
+	FieldEnum[] fields;
+
+	public SubType setFields(FieldEnum... fields) {
+		this.fields = fields;		
+		return (SubType) this;
+	}
+	public SubType setFields(Collection<? extends FieldEnum> fields) {
+		this.fields = fields.toArray(new FieldEnum[0]);		
+		return (SubType) this;
+	}
+
+}
