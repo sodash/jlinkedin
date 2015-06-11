@@ -133,7 +133,6 @@ public enum GroupField implements CompositeEnum<GroupField> {
 		return stringToEnum.get(symbol);
 	}
 
-	@Override
 	public GroupField parent() {
 		return parent;
 	}

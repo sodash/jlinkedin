@@ -22,4 +22,5 @@ public interface FieldEnum {
 	 * @return the name of the field
 	 */
 	public String fieldName();
+
 }

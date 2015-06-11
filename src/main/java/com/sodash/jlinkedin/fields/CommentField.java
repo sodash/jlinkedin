@@ -90,7 +90,6 @@ public enum CommentField implements CompositeEnum<CommentField> {
 		return stringToEnum.get(symbol);
 	}
 
-	@Override
 	public CommentField parent() {
 		return parent;
 	}

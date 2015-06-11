@@ -68,7 +68,11 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		try {
 			JSONObject jobj = new JSONObject(json);
 			int total = jobj.optInt("_total");
-			JSONArray vs = jobj.getJSONArray("values");
+			JSONArray vs = jobj.optJSONArray("values");
+			if (vs==null) {
+				assert total==0;
+				return new ListResults();
+			}
 			
 			ListResults list = new ListResults();
 			list.setTotal(total);

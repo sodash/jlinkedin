@@ -19,6 +19,14 @@ import winterwell.utils.containers.ArrayMap;
 import winterwell.utils.containers.ArraySet;
 import winterwell.web.FakeBrowser;
 
+/**
+ * 
+ * See
+ * https://apigee.com/console/linkedin
+ * 
+ * @author daniel
+ *
+ */
 public class JLinkedIn {	
 	
 	String authToken;

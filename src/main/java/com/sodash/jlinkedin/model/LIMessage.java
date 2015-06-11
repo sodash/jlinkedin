@@ -34,6 +34,10 @@ public class LIMessage extends LIModelBase {
 		String _id = super.getId();
 		if (_id==null) {
 			// See https://developer.linkedin.com/documents/commenting-reading-comments-and-likes-network-updates
+			// update key: has UPDATE-c{companyid}-{topicid}
+			String key = (String) base.get("updateKey");
+			// Do we want to use the update key, or pull out the topic-id??
+			if (key!=null) return key;
 //			id = u.getUpdateKey();
 			assert false : this;
 		}

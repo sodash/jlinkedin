@@ -7,10 +7,13 @@ import winterwell.json.JSONObject;
 import winterwell.utils.StrUtils;
 import winterwell.utils.containers.ArrayMap;
 import winterwell.utils.containers.IOneShot;
+import winterwell.utils.web.SimpleJson;
+import winterwell.utils.web.WebUtils;
 import winterwell.web.FakeBrowser;
 
 import com.sodash.jlinkedin.fields.FieldEnum;
 import com.sodash.jlinkedin.model.LIProfile;
+import com.winterwell.utils.web.WebUtils2;
 
 abstract class JLinkedInAPIFacet<SubType extends JLinkedInAPIFacet> implements IOneShot {
 	
@@ -26,12 +29,39 @@ abstract class JLinkedInAPIFacet<SubType extends JLinkedInAPIFacet> implements I
 		return getProfile(null);
 	}
 
+	/**
+	 * 
+	 * @param url
+	 * @param vars Standard parameters will be added for you. Can be null.
+	 * @return json
+	 */
 	String getPage(String url, Map vars) {
 		assert jli.authToken != null;
 		// add auth header
 		fb.setRequestHeader("Authorization", "Bearer "+jli.authToken);
 		vars = addStdParams(vars);
 		String page = fb.getPage(url, vars);
+		return page;
+	}
+	
+	
+	/**
+	 * 
+	 * @param url
+	 * @param vars Standard parameters will be added for you. Can be null.
+	 * @return json
+	 */
+	String post(String url, Map vars) {
+		assert jli.authToken != null;
+		// add auth header
+		fb.setRequestHeader("Authorization", "Bearer "+jli.authToken);
+		Map urlvars = addStdParams(null);
+		url = WebUtils2.addQueryParameters(url, urlvars);
+		Object c = vars.get("content");
+		String encodedPostBody = new SimpleJson().toJson(vars);
+		fb.setRequestHeader("x-li-format", "json");
+		String page = fb.post(url, "application/json", encodedPostBody);
+		JSONObject jobj = new JSONObject(page);		
 		return page;
 	}
 

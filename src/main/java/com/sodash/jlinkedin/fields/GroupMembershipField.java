@@ -102,7 +102,6 @@ public enum GroupMembershipField implements CompositeEnum<GroupMembershipField> 
 		return stringToEnum.get(symbol);
 	}
 
-	@Override
 	public GroupMembershipField parent() {
 		return parent;
 	}

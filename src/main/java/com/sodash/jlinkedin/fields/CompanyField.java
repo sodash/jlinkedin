@@ -241,7 +241,6 @@ public enum CompanyField implements CompositeEnum<CompanyField> {
 		return stringToEnum.get(symbol);
 	}
 
-	@Override
 	public CompanyField parent() {
 		return parent;
 	}
