@@ -174,8 +174,8 @@ public class LIMessage extends LIModelBase {
 		throw new TodoException(getType()+" "+base);
 	}
 
-	public com.sodash.jlinkedin.model.LICompany getCompany() {
-		throw new TodoException(getType()+" "+base);
+	public LICompany getCompany() {
+		return new LICompany(new JSONObject(this.base.getString("company")));
 	}
 
 }

@@ -38,5 +38,8 @@ public class LIUpdate extends LIModelBase {
 	public List<LIMessage> getComments() {
 		throw new TodoException();
 	}
-
+	
+	public LICompany getCompany() {
+		return new LICompany(new JSONObject(this.base.getString("company")));
+	}
 }

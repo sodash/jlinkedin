@@ -3,6 +3,7 @@ package com.sodash.jlinkedin;
 import java.lang.reflect.Constructor;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import winterwell.json.JSONArray;
@@ -17,6 +18,7 @@ import com.sodash.jlinkedin.fields.GroupMembershipField;
 import com.sodash.jlinkedin.fields.NetworkUpdateType;
 import com.sodash.jlinkedin.fields.PostField;
 import com.sodash.jlinkedin.fields.PostSortOrder;
+import com.sodash.jlinkedin.fields.UpdateType;
 import com.sodash.jlinkedin.model.LICompany;
 import com.sodash.jlinkedin.model.LIGroup;
 import com.sodash.jlinkedin.model.LIGroupMembership;
@@ -36,33 +38,79 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 	public JLinkedInGet(JLinkedIn jLinkedIn) {
 		this.jli = jLinkedIn;
 	}
+	
+	public boolean getSharingEnabled(String companyId) {
+		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/is-company-share-enabled";
+		String json = getPage(jsonUrl, new ArrayMap());
+		return "true".equalsIgnoreCase(json);
+	}
+	
+	public boolean getCanAdminCompany(String companyId) {
+		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/relation-to-viewer/is-company-share-enabled";
+		String json = getPage(jsonUrl, new ArrayMap());
+		return "true".equalsIgnoreCase(json);
+	}
+	
+	public List<LICompany> getUserCompanies() {
+		String json = getPage("https://api.linkedin.com/v1/companies", new ArrayMap("is-company-admin", true));
+		ListResults<LICompany> list = toResults(json, LICompany.class);
+		return list;	
+	}
+	
+	public LICompany getCompanyById(String companyId) {
+		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId;
+		String json = getPage(jsonUrl, new ArrayMap());
+		return new LICompany(new JSONObject(json));
+	}
+	
+	public ListResults<LIMessage> getCompanyUpdates(String companyId, UpdateType eventType, Integer startPage, Integer count) {
+		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates";
+		Map params = new ArrayMap();
+		if(eventType != null) {
+			params.put("event-type", eventType);
+		}
+		
+		if(startPage != null) {
+			params.put("start", startPage);
+		}
+		
+		if(count != null) {
+			params.put("count", count);
+		}
+		String json = getPage(jsonUrl, params);
+		return toResults(json, LIMessage.class);
+	}
+	
+	public LIMessage getCompanyUpdate(String companyId, String updateKey) {
+		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey;
+		String json = getPage(jsonUrl, new ArrayMap());
+		return new LIMessage(new JSONObject(json));
+	}
+	
+	public ListResults<LIMessage> getCompanyUpdateComments(String companyId, String updateKey) {
+		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey+"/update-comments";
+		String json = getPage(jsonUrl, new ArrayMap());
+		return toResults(json, LIMessage.class);
+	}
+	
+	public ListResults<LIUpdate> getCompanyUpdateLikes(String companyId, String updateKey) {
+		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey+"/likes";
+		String json = getPage(jsonUrl, new ArrayMap());
+		return toResults(json, LIUpdate.class);
+	}
+
 
 	public LIGroup getGroupById(String gid) {
 		// TODO Auto-generated method stub
 		throw new TodoException();
 	}
-
-	public List<LIMessage> getCompanyUpdates(String dewart) {
-		// TODO Auto-generated method stub
-		throw new TodoException();
-	}
-
-	public ListResults<LIMessage> getCompanyUpdateComments(String dewart, String id) {
-		// TODO Auto-generated method stub
-		throw new TodoException();
-	}
-
+	
 	public ListResults<LIMessage> getNetworkUpdateComments(String networkUpdateKey) {
 		// TODO Auto-generated method stub
 		throw new TodoException();
 	}
 
-	public List<LICompany> getUserCompanies() {
-		String json = getPage("https://api.linkedin.com/v1/companies", new ArrayMap("is-company-admin", true));
-		ListResults<LICompany> list = toResults(json, LICompany.class);
-		return list;
-		
-	}
+
 
 	private <LI extends LIModelBase> ListResults<LI> toResults(String json, Class<LI> class1) {
 		try {
@@ -119,10 +167,6 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 	}
 
 	public LICompany getCompanyByUniversalName(String co) {
-		throw new TodoException();
-	}
-
-	public com.sodash.jlinkedin.model.LICompany getCompanyById(String string) {
 		throw new TodoException();
 	}
 
