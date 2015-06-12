@@ -8,7 +8,7 @@ import java.util.Set;
 import com.sodash.jlinkedin.fields.FieldEnum;
 import com.sodash.jlinkedin.fields.ProfileField;
 import com.sodash.jlinkedin.model.LIGroup;
-import com.sodash.jlinkedin.model.LIMessage;
+import com.sodash.jlinkedin.model.LIUpdate;
 import com.sodash.jlinkedin.model.LIProfile;
 
 import winterwell.json.JSONObject;

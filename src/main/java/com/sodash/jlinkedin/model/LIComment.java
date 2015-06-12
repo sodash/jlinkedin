@@ -17,31 +17,30 @@ import com.sodash.jlinkedin.fields.MessageType;
  * @author daniel
  *
  */
-public class LIMessage extends LIModelBase {
+public class LIComment extends LIModelBase {
 
-	private LIUpdate update;
+	private LIEvent update;
 
-	public LIMessage(JSONObject base) {
+	public LIComment(JSONObject base) {
 		super(base);		
 	}
 	
-	public LIMessage(LIUpdate u) {
+	public LIComment(LIEvent u) {
 		super(u.base);
 		this.update = u;
 	}
 
+	/**
+	 * Get the message's ID or Update Key
+	 * Comments have property "id"
+	 * Updates (aka Shares) have property "updateKey"
+	 */
 	public String getId() {
-		String _id = super.getId();
-		if (_id==null) {
-			// See https://developer.linkedin.com/documents/commenting-reading-comments-and-likes-network-updates
-			// update key: has UPDATE-c{companyid}-{topicid}
-			String key = (String) base.get("updateKey");
-			// Do we want to use the update key, or pull out the topic-id??
-			if (key!=null) return key;
-//			id = u.getUpdateKey();
-			assert false : this;
-		}
-		return _id;
+		if(this.base.has("id")) {
+			return super.getId();
+		} else if(this.base.has("updateKey")) {
+			return this.base.getString("updateKey");
+		} else return null;
 	}
 	
 	MessageType type;
@@ -158,7 +157,7 @@ public class LIMessage extends LIModelBase {
 		throw new TodoException(getType()+" "+base);
 	}
 
-	public List<LIMessage> getComments() {
+	public List<LIUpdate> getComments() {
 		throw new TodoException(getType()+" "+base);
 	}
 
@@ -166,16 +165,33 @@ public class LIMessage extends LIModelBase {
 		this.contents = contents;
 	}
 
+	/**
+	 * Non-partner API calls can only return status updates from companies, so
+	 * this should always yield an LICompany when called on an Update.
+	 * Comments can be made by Companies or People - if called on a Comment
+	 * made by a Person, this will return null.
+	 * @return
+	 */
 	public LIProfile getCreator() {
-		throw new TodoException(getType()+" "+base);
+		if(!this.base.has("person")) return null;
+		return new LIProfile(this.base.getJSONObject("person"));
 	}
 
 	public Time getCreatedTime() {
-		throw new TodoException(getType()+" "+base);
+		if(!this.base.has("timestamp")) return null;
+		return new Time(this.base.getLong("timestamp"));
 	}
-
+	
+	/**
+	 * Non-partner API calls can only return status updates from companies, so
+	 * this should always yield an LICompany when called on an Update.
+	 * Comments can be made by Companies or People - if called on a Comment
+	 * made by a Person, this will return null.
+	 * @return
+	 */
 	public LICompany getCompany() {
-		return new LICompany(new JSONObject(this.base.getString("company")));
+		if(!this.base.has("company")) return null;
+		return new LICompany(this.base.getJSONObject("company"));
 	}
 
 }

@@ -19,12 +19,13 @@ import com.sodash.jlinkedin.fields.NetworkUpdateType;
 import com.sodash.jlinkedin.fields.PostField;
 import com.sodash.jlinkedin.fields.PostSortOrder;
 import com.sodash.jlinkedin.fields.UpdateType;
+import com.sodash.jlinkedin.model.LIComment;
 import com.sodash.jlinkedin.model.LICompany;
 import com.sodash.jlinkedin.model.LIGroup;
 import com.sodash.jlinkedin.model.LIGroupMembership;
-import com.sodash.jlinkedin.model.LIMessage;
-import com.sodash.jlinkedin.model.LIModelBase;
 import com.sodash.jlinkedin.model.LIUpdate;
+import com.sodash.jlinkedin.model.LIModelBase;
+import com.sodash.jlinkedin.model.LIEvent;
 import com.sodash.jlinkedin.model.ListResults;
 
 
@@ -63,7 +64,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		return new LICompany(new JSONObject(json));
 	}
 	
-	public ListResults<LIMessage> getCompanyUpdates(String companyId, UpdateType eventType, Integer startPage, Integer count) {
+	public ListResults<LIUpdate> getCompanyUpdates(String companyId, UpdateType eventType, Integer startPage, Integer count) {
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates";
 		Map params = new ArrayMap();
 		if(eventType != null) {
@@ -78,25 +79,25 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 			params.put("count", count);
 		}
 		String json = getPage(jsonUrl, params);
-		return toResults(json, LIMessage.class);
+		return toResults(json, LIUpdate.class);
 	}
 	
-	public LIMessage getCompanyUpdate(String companyId, String updateKey) {
+	public LIUpdate getCompanyUpdate(String companyId, String updateKey) {
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey;
 		String json = getPage(jsonUrl, new ArrayMap());
-		return new LIMessage(new JSONObject(json));
+		return new LIUpdate(new JSONObject(json));
 	}
 	
-	public ListResults<LIMessage> getCompanyUpdateComments(String companyId, String updateKey) {
+	public ListResults<LIComment> getCompanyUpdateComments(String companyId, String updateKey) {
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey+"/update-comments";
 		String json = getPage(jsonUrl, new ArrayMap());
-		return toResults(json, LIMessage.class);
+		return toResults(json, LIComment.class);
 	}
 	
-	public ListResults<LIUpdate> getCompanyUpdateLikes(String companyId, String updateKey) {
+	public ListResults<LIEvent> getCompanyUpdateLikes(String companyId, String updateKey) {
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey+"/likes";
 		String json = getPage(jsonUrl, new ArrayMap());
-		return toResults(json, LIUpdate.class);
+		return toResults(json, LIEvent.class);
 	}
 
 
@@ -105,7 +106,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		throw new TodoException();
 	}
 	
-	public ListResults<LIMessage> getNetworkUpdateComments(String networkUpdateKey) {
+	public ListResults<LIUpdate> getNetworkUpdateComments(String networkUpdateKey) {
 		// TODO Auto-generated method stub
 		throw new TodoException();
 	}
@@ -135,11 +136,11 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		}
 	}
 
-	public List<LIMessage> getPostComments(String id) {
+	public List<LIUpdate> getPostComments(String id) {
 		throw new TodoException();
 	}
 
-	public List<LIMessage>  getPostsByGroup(String name, Set<PostField> postFields,
+	public List<LIUpdate>  getPostsByGroup(String name, Set<PostField> postFields,
 			int i, int j, PostSortOrder recency, String string, Date date) {
 		throw new TodoException();
 	}
@@ -149,11 +150,11 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		throw new TodoException();
 	}
 
-	public List<LIUpdate> getUserUpdates(Set<NetworkUpdateType> ut) {
+	public List<LIEvent> getUserUpdates(Set<NetworkUpdateType> ut) {
 		throw new TodoException();
 	}
 
-	public List<LIUpdate> getUserUpdates(String id, Set<NetworkUpdateType> ut) {
+	public List<LIEvent> getUserUpdates(String id, Set<NetworkUpdateType> ut) {
 		throw new TodoException();
 	}
 
