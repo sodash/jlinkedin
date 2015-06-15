@@ -4,6 +4,7 @@ import com.sodash.jlinkedin.fields.CompanyField;
 
 import winterwell.json.JSONObject;
 import winterwell.utils.Utils;
+import winterwell.utils.containers.ArrayMap;
 
 /**
  * {@link CompanyField}
@@ -17,8 +18,12 @@ public class LICompany extends LIEntity {
 		super(base);
 	}
 
+	public LICompany(String companyId) {
+		super(new JSONObject(new ArrayMap("id", companyId)));
+	}
+
 	public String getName() {
-		return base.getString("name");
+		return base.optString("name");
 	}
 	
 	public String getType() {

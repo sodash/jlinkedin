@@ -4,91 +4,67 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import winterwell.utils.Utils;
+
+import com.sodash.jlinkedin.model.LIPostRequest;
+import com.sodash.jlinkedin.model.LIUpdate;
+
 public class JLinkedInPostTest {
 
+	String socialCutlery = "9750841";
+	
 	@Test
-	public void testPostComment() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSendMessage() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testPostCompanyShareStringBooleanString() {
+	public void testPostCompanySimpleShare() {
 		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN_SPOON);
-		String socialCutlery = "9750841";
-		Object posted = jli.post().postCompanyShare(
-			"Today is National Fork Day! Find out about National Fork Day at http://sodash.com!",
-			false,
-			socialCutlery
-			);
-		assert posted != null;
-	}
-
-	@Test
-	public void testPostCompanyShareStringBooleanStringStringStringStringString() {
-		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN_SPOON);
-		String socialCutlery = "9750841";
-		Object posted = jli.post().postCompanyShare(
-			"Today is National Fork Day!",
-			false,
+		
+		LIUpdate posted = jli.post().postCompanyUpdate(
 			socialCutlery,
-			
-			"National Fork Day", 
-			"Fork day is an important celebration", 
-			"http://sodash.com", 
-			"http://www.roullierwhite.com/ekmps/shops/roullierwhite/images/maxwell-williams-oyster-fork-123-p.jpg"
+			"Today is National Fork Day! Find out about National Fork Day at http://sodash.com!"		
 			);
+		
+		assert posted != null;
+		assert posted.getId() != null;
+		assert posted.getContents().startsWith("Today is National Fork Day");
+		assert posted.getCompany() != null;
+		assert posted.getCompany().getId().equals(socialCutlery);
+	}
+
+	@Test
+	public void testPostCompanyShare() {
+		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN_SPOON);
+		LIPostRequest post = new LIPostRequest();
+		String salt = Utils.getRandomString(4);
+		post.title = "National Fork Day "+salt;
+		post.contents ="Today is National Fork Day! "+salt;
+		post.companyId = socialCutlery;		
+		post.description = "Fork day is an important celebration "+salt; 
+		post.url = "http://sodash.com"; 
+		post.imgUrl = "http://www.roullierwhite.com/ekmps/shops/roullierwhite/images/maxwell-williams-oyster-fork-123-p.jpg";
+
+		Object posted = jli.post().postUpdate(post);
 		assert posted != null;
 	}
 	
 	@Test
-	public void testPostPersonShareStringBoolean() {
+	public void testPostPersonShareSimple() {
 		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN_SPOON);
-		Object posted = jli.post().postPersonShare(
-			"I'm Spoon McGuffin, and I love it when people visit http://sodash.com!",
-			false
-			);
+		LIUpdate posted = jli.post().postPersonUpdate("I'm Spoon McGuffin, and I love it when people visit http://sodash.com!");
 		assert posted != null;
 	}
 
 	@Test
-	public void testPostPersonShareStringBooleanStringStringStringStringString() {
+	public void testPostPersonShare() {
 		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN_SPOON);
-		Object posted = jli.post().postCompanyShare(
-			"Look at me, I'm Spoon McGuffin!",
-			false,
-			null,
-			
-			"Spoon's Homepage", 
-			"Don't worry if you don't see Spoon there.", 
-			"http://sodash.com", 
-			"http://images.fineartamerica.com/images-medium-large-5/spoon-pencil-drawing-andrea-pontillo.jpg"
-			);
+		LIPostRequest post = new LIPostRequest();
+		String salt = Utils.getRandomString(4);
+		post.contents = "Look at me, I'm Spoon McGuffin! "+salt;
+		post.title = "Spoon's Homepage "+salt; 
+		post.description = "Don't worry if you don't see Spoon there. "+salt; 
+		post.url = "http://sodash.com"; 
+		post.imgUrl = "http://images.fineartamerica.com/images-medium-large-5/spoon-pencil-drawing-andrea-pontillo.jpg";
+		LIUpdate posted = jli.post().postUpdate(post);				
 		assert posted != null;
 	}
 
-	@Test
-	public void testAddPostComment() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCreatePost() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testPostShareString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testPostShareStringStringStringStringStringBoolean() {
-		fail("Not yet implemented");
-	}
 
 }

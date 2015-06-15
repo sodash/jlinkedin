@@ -19,10 +19,11 @@ import com.sodash.jlinkedin.fields.NetworkUpdateType;
 import com.sodash.jlinkedin.fields.PostField;
 import com.sodash.jlinkedin.fields.PostSortOrder;
 import com.sodash.jlinkedin.fields.UpdateType;
+import com.sodash.jlinkedin.model.LIComment;
 import com.sodash.jlinkedin.model.LICompany;
+import com.sodash.jlinkedin.model.LIEvent;
 import com.sodash.jlinkedin.model.LIGroup;
 import com.sodash.jlinkedin.model.LIGroupMembership;
-import com.sodash.jlinkedin.model.LIMessage;
 import com.sodash.jlinkedin.model.LIModelBase;
 import com.sodash.jlinkedin.model.LIUpdate;
 import com.sodash.jlinkedin.model.ListResults;
@@ -30,16 +31,16 @@ import com.sodash.jlinkedin.model.ListResults;
 
 public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 
-	private Time since;
-	private Time until;
+//	private Time since;
+//	private Time until;
 	private int start;
 	private int count;
 
 	@Override
 	protected Map addStdParams(Map vars) {
 		Map map = super.addStdParams(vars);
-		if (since!=null) vars.put();
-		if (until!=null) vars.put();
+//		if (since!=null) vars.put();
+//		if (until!=null) vars.put();
 		if (start!=0) vars.put("start", start);
 		if (count!=0) vars.put("count", count);
 		return map;
@@ -79,7 +80,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 	 * @param eventType Can be null
 	 * @return
 	 */
-	public ListResults<LIMessage> getCompanyUpdates(String companyId, UpdateType eventType) {
+	public ListResults<LIUpdate> getCompanyUpdates(String companyId, UpdateType eventType) {
 		assert companyId!=null;
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates";
 		Map params = new ArrayMap();
@@ -87,43 +88,41 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 			params.put("event-type", eventType);
 		}		
 		String json = getPage(jsonUrl, params);
-		return toResults(json, LIMessage.class);
+		return toResults(json, LIUpdate.class);
 	}
 	
-	public LIMessage getCompanyUpdate(String companyId, String updateKey) {
+	public LIUpdate getCompanyUpdate(String companyId, String updateKey) {
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey;
 		String json = getPage(jsonUrl, new ArrayMap());
-		return new LIMessage(new JSONObject(json));
+		return new LIUpdate(new JSONObject(json));
 	}
 	
-	public ListResults<LIMessage> getCompanyUpdateComments(String companyId, String updateKey) {
+	public ListResults<LIComment> getCompanyUpdateComments(String companyId, String updateKey) {
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey+"/update-comments";
 		String json = getPage(jsonUrl, new ArrayMap());
-		return toResults(json, LIMessage.class);
+		return toResults(json, LIComment.class);
 	}
 	
-	public ListResults<LIUpdate> getCompanyUpdateLikes(String companyId, String updateKey) {
+	public ListResults<LIEvent> getCompanyUpdateLikes(String companyId, String updateKey) {
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey+"/likes";
 		String json = getPage(jsonUrl, new ArrayMap());
-		return toResults(json, LIUpdate.class);
+		return toResults(json, LIEvent.class);
 	}
 
 
 	public LIGroup getGroupById(String gid) {
-		// TODO Auto-generated method stub
-		throw new TodoException();
+		String html = getPage("https://www.linkedin.com/grp/home", new ArrayMap("gid", gid));
+		return new LIGroup(html);
 	}
 	
-	public ListResults<LIMessage> getNetworkUpdateComments(String networkUpdateKey) {
-		// TODO Auto-generated method stub
-		throw new TodoException();
+
+
+
+	public static <LI extends LIModelBase> ListResults<LI> toResults(String json, Class<LI> class1) {
+		return toResults(new JSONObject(json), class1);
 	}
-
-
-
-	private <LI extends LIModelBase> ListResults<LI> toResults(String json, Class<LI> class1) {
-		try {
-			JSONObject jobj = new JSONObject(json);
+	public static <LI extends LIModelBase> ListResults<LI> toResults(JSONObject jobj, Class<LI> class1) {
+		try {			
 			int total = jobj.optInt("_total");
 			JSONArray vs = jobj.optJSONArray("values");
 			if (vs==null) {
@@ -144,11 +143,11 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		}
 	}
 
-	public List<LIMessage> getPostComments(String id) {
+	public List<LIComment> getPostComments(String id) {
 		throw new TodoException();
 	}
 
-	public List<LIMessage>  getPostsByGroup(String name, Set<PostField> postFields,
+	public List<LIComment>  getPostsByGroup(String name, Set<PostField> postFields,
 			int i, int j, PostSortOrder recency, String string, Date date) {
 		throw new TodoException();
 	}
@@ -158,20 +157,31 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		throw new TodoException();
 	}
 
-	public List<LIUpdate> getUserUpdates(Set<NetworkUpdateType> ut) {
+	public List<LIEvent> getUserUpdates(Set<NetworkUpdateType> ut) {
 		throw new TodoException();
 	}
 
-	public List<LIUpdate> getUserUpdates(String id, Set<NetworkUpdateType> ut) {
+	public List<LIEvent> getUserUpdates(String id, Set<NetworkUpdateType> ut) {
 		throw new TodoException();
 	}
 
+	/**
+	 * @deprecated I don't think LinkedIn support this anymore :(
+	 * @param since
+	 * @return
+	 */
 	public JLinkedInGet setSince(Time since) {
-		this.since = since;
+//		this.since = since;
 		return this;
 	}
-	public JLinkedInGet setUntil(Time since) {
-		this.until = since;
+	
+	/**
+	 * @deprecated I don't think LinkedIn support this anymore :(
+	 * @param until
+	 * @return
+	 */
+	public JLinkedInGet setUntil(Time until) {
+//		this.until = until;
 		return this;
 	}
 

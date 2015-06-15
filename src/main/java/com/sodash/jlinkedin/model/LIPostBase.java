@@ -1,51 +1,37 @@
-/**
- * 
- */
 package com.sodash.jlinkedin.model;
 
 import java.util.List;
 
 import winterwell.json.JSONObject;
+import winterwell.utils.StrUtils;
 import winterwell.utils.TodoException;
 import winterwell.utils.time.Time;
 
-import com.sodash.jlinkedin.fields.MessageType;
+public abstract class LIPostBase extends LIModelBase {
 
+	public LIPostBase(JSONObject base) {
+		super(base);
+	}
 
-/**
- * Unify all the many types of message LI offers
- * @author daniel
- *
- */
-public class LIMessage extends LIModelBase {
-
-	private LIUpdate update;
-
-	public LIMessage(JSONObject base) {
-		super(base);		
+	/**
+	 * Get the message's ID or Update Key
+	 * Comments have property "id"
+	 * Updates (aka Shares) have property "updateKey"
+	 */
+	public final String getId() {
+		if(this.base.has("id")) {			
+			return super.getId();
+		} else if(this.base.has("updateKey")) {
+			assert ! (this instanceof LIComment);
+			return this.base.getString("updateKey");
+		} else return null;
 	}
 	
-	public LIMessage(LIUpdate u) {
-		super(u.base);
-		this.update = u;
-	}
-
-	public String getId() {
-		String _id = super.getId();
-		if (_id==null) {
-			// See https://developer.linkedin.com/documents/commenting-reading-comments-and-likes-network-updates
-			// update key: has UPDATE-c{companyid}-{topicid}
-			String key = (String) base.get("updateKey");
-			// Do we want to use the update key, or pull out the topic-id??
-			if (key!=null) return key;
-//			id = u.getUpdateKey();
-			assert false : this;
-		}
-		return _id;
+	public String toString() {
+		return getClass().getSimpleName()+"["+StrUtils.joinWithSkip(" ", getTitle(), getDescription(), getContents(), getSharedUrl())+"]";
 	}
 	
-	MessageType type;
-	private String contents;
+	String contents;
 	
 //	/**
 //	 * Set contents & stuff from a Content object
@@ -65,31 +51,33 @@ public class LIMessage extends LIModelBase {
 //		}
 //	}
 
-	public String getTitle() {
+	public final String getTitle() {
 		throw new TodoException(base);
 	}
 	
-	public String getDescription() {
+	public final String getDescription() {
 		throw new TodoException(base);
 	}
 	
 	String sharedUrl;
 	
-	public String getSharedUrl() {
+	public final String getSharedUrl() {
 		if (true) throw new TodoException(base);
 		return sharedUrl;
 	}
 	
-	public MessageType getType() {
+	Object type;
+	
+	public final Object getType() {
 		assert type != null : this;
 		return type;
 	}
 
-	public String getPublicUrl() {
+	public final String getPublicUrl() {
 		throw new TodoException(base);
 	}
 
-	public String getContents() {
+	public final String getContents() {
 //		CompanyJobUpdate cju = uc.getCompanyJobUpdate();
 //		CompanyPersonUpdate cpu = uc.getCompanyPersonUpdate();		
 //		CompanyStatusUpdate csu = uc.getCompanyStatusUpdate();
@@ -107,14 +95,14 @@ public class LIMessage extends LIModelBase {
 //		CompanyProfileUpdate cpu2 = uc.getCompanyProfileUpdate();				
 
 
-//		public static String getActivityString(Update u) {
+//		public final static String getActivityString(Update u) {
 //			List<Activity> acts = u.getUpdateContent().getPerson()
 //					.getPersonActivities().getActivityList();
 //			Activity act = acts.get(0);
 //			return act.getBody();
 //		}
 //
-//		public String getCurrentStatusString(Update u) {
+//		public final String getCurrentStatusString(Update u) {
 //			String status = u.getUpdateContent().getPerson().getCurrentStatus();
 //			return status;
 //		}
@@ -151,31 +139,48 @@ public class LIMessage extends LIModelBase {
 //		}
 
 		
-		throw new TodoException(getType()+" "+base);
+		return contents;
 	}
 	
-	public Object getAttachments() {
+	public final Object getAttachments() {
 		throw new TodoException(getType()+" "+base);
 	}
 
-	public List<LIMessage> getComments() {
-		throw new TodoException(getType()+" "+base);
-	}
-
-	public void setContents(String contents) {
+	public final void setContents(String contents) {
 		this.contents = contents;
 	}
 
-	public LIProfile getCreator() {
-		throw new TodoException(getType()+" "+base);
+	/**
+	 * Non-partner API calls can only return status updates from companies, so
+	 * this should always yield an LICompany when called on an Update.
+	 * Comments can be made by Companies or People - if called on a Comment
+	 * made by a Person, this will return null.
+	 * @return
+	 */
+	public final LIProfile getCreator() {
+		if( ! this.base.has("person")) return null;
+		return new LIProfile(this.base.getJSONObject("person"));
+	}	
+
+	public final Time getCreatedTime() {
+		if(!this.base.has("timestamp")) return null;
+		return new Time(this.base.getLong("timestamp"));
+	}
+	
+	LICompany company;
+	
+	/**
+	 * Non-partner API calls can only return status updates from companies, so
+	 * this should always yield an LICompany when called on an Update.
+	 * Comments can be made by Companies or People - if called on a Comment
+	 * made by a Person, this will return null.
+	 * @return
+	 */
+	public final LICompany getCompany() {
+		if (company!=null) return company;
+		if( ! this.base.has("company")) return null;
+		return new LICompany(this.base.getJSONObject("company"));
 	}
 
-	public Time getCreatedTime() {
-		throw new TodoException(getType()+" "+base);
-	}
-
-	public LICompany getCompany() {
-		return new LICompany(new JSONObject(this.base.getString("company")));
-	}
 
 }

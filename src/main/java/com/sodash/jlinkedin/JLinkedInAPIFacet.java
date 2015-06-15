@@ -5,6 +5,7 @@ import java.util.Map;
 
 import winterwell.json.JSONObject;
 import winterwell.utils.StrUtils;
+import winterwell.utils.Utils;
 import winterwell.utils.containers.ArrayMap;
 import winterwell.utils.containers.IOneShot;
 import winterwell.utils.web.SimpleJson;
@@ -61,9 +62,13 @@ abstract class JLinkedInAPIFacet<SubType extends JLinkedInAPIFacet> implements I
 		Object c = vars.get("content");
 		String encodedPostBody = new SimpleJson().toJson(vars);
 		fb.setRequestHeader("x-li-format", "json");
-		String page = fb.post(url, "application/json", encodedPostBody);
-		JSONObject jobj = new JSONObject(page);		
-		return page;
+		try {
+			String page = fb.post(url, "application/json", encodedPostBody);
+			JSONObject jobj = new JSONObject(page);		
+			return page;
+		} catch(Exception ex) {
+			throw Utils.runtime(ex);
+		}
 	}
 
 

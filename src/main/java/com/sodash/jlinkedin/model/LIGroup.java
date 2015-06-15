@@ -7,6 +7,9 @@ import com.sodash.jlinkedin.fields.ProfileField;
 
 public class LIGroup extends LIModelBase {
 
+	public LIGroup(String html) {
+		super(new JSONObject());		
+	}
 
 	public LIGroup(JSONObject base) {
 		super(base);
