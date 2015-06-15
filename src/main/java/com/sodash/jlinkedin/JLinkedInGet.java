@@ -35,6 +35,16 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 	private int start;
 	private int count;
 
+	@Override
+	protected Map addStdParams(Map vars) {
+		Map map = super.addStdParams(vars);
+		if (since!=null) vars.put();
+		if (until!=null) vars.put();
+		if (start!=0) vars.put("start", start);
+		if (count!=0) vars.put("count", count);
+		return map;
+	}
+	
 	public JLinkedInGet(JLinkedIn jLinkedIn) {
 		this.jli = jLinkedIn;
 	}
@@ -63,20 +73,19 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		return new LICompany(new JSONObject(json));
 	}
 	
-	public ListResults<LIMessage> getCompanyUpdates(String companyId, UpdateType eventType, Integer startPage, Integer count) {
+	/**
+	 * 
+	 * @param companyId
+	 * @param eventType Can be null
+	 * @return
+	 */
+	public ListResults<LIMessage> getCompanyUpdates(String companyId, UpdateType eventType) {
+		assert companyId!=null;
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates";
 		Map params = new ArrayMap();
 		if(eventType != null) {
 			params.put("event-type", eventType);
-		}
-		
-		if(startPage != null) {
-			params.put("start", startPage);
-		}
-		
-		if(count != null) {
-			params.put("count", count);
-		}
+		}		
 		String json = getPage(jsonUrl, params);
 		return toResults(json, LIMessage.class);
 	}

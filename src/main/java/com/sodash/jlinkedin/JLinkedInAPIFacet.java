@@ -17,9 +17,10 @@ import com.winterwell.utils.web.WebUtils2;
 
 abstract class JLinkedInAPIFacet<SubType extends JLinkedInAPIFacet> implements IOneShot {
 	
-	private Map addStdParams(Map vars) {
+	protected Map addStdParams(Map vars) {
 		if (vars==null) vars = new ArrayMap();
 		vars.put("format", "json");
+		// count and page: done in the get() override
 		return vars;
 	}
 
