@@ -112,7 +112,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 
 	public LIGroup getGroupById(String gid) {
 		String html = getPage("https://www.linkedin.com/grp/home", new ArrayMap("gid", gid));
-		return new LIGroup(html);
+		return new LIGroup(gid, html);
 	}
 	
 

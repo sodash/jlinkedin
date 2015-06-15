@@ -12,6 +12,7 @@ import winterwell.utils.containers.ArrayMap;
 
 import com.sodash.jlinkedin.model.LIComment;
 import com.sodash.jlinkedin.model.LICompany;
+import com.sodash.jlinkedin.model.LIGroup;
 import com.sodash.jlinkedin.model.LIUpdate;
 import com.sodash.jlinkedin.model.LIEvent;
 import com.sodash.jlinkedin.model.ListResults;
@@ -64,9 +65,9 @@ public class JLinkedInGetTest {
 	public void testGetCompanyUpdates() {
 		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN_SPOON);
 		List<LIUpdate> updates = jli.get().getCompanyUpdates(socialCutleryId, null);
-		
-		boolean gotUpdates = updates != null && socialCutleryId.equals(updates.get(0).getCompany().getId());
-		assert(gotUpdates): "Didn't get Social Cutlery updates from a request for Social Cutlery updates...";
+		assert updates != null;
+		boolean gotUpdates = socialCutleryId.equals(updates.get(0).getCompany().getId());
+		assert gotUpdates : updates;
 	}
 	
 	@Test
@@ -76,6 +77,16 @@ public class JLinkedInGetTest {
 		LIUpdate update = jli.get().getCompanyUpdate(socialCutleryId, forkDayUpdateKey);
 		boolean correctUpdate = update != null && forkDayUpdateKey.equals(update.getId());
 		assert(correctUpdate): "Didn't get the Fork Day update from a request for the Fork Day update...";
+	}
+	
+
+	@Test
+	public void testGetGroup() {
+		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN);
+		String gid = "784657";
+		LIGroup update = jli.get().getGroupById(gid);
+		assert update != null;
+		assert update.getId().equals(gid);
 	}
 	
 	@Test
