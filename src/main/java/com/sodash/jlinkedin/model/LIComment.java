@@ -19,15 +19,8 @@ import com.sodash.jlinkedin.fields.MessageType;
  */
 public class LIComment extends LIPostBase {
 
-	private LIPostBase update;
-
 	public LIComment(JSONObject base) {
 		super(base);		
 	}
 	
-	public LIComment(LIPostBase u) {
-		super(u.base);
-		this.update = u;
-	}
-
 }

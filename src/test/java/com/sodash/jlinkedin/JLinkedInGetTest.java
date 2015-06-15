@@ -66,7 +66,9 @@ public class JLinkedInGetTest {
 		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN_SPOON);
 		List<LIUpdate> updates = jli.get().getCompanyUpdates(socialCutleryId, null);
 		assert updates != null;
-		boolean gotUpdates = socialCutleryId.equals(updates.get(0).getCompany().getId());
+		LIUpdate u0 = updates.get(0);
+		LICompany co0 = u0.getCompany();
+		boolean gotUpdates = socialCutleryId.equals(co0.getId());
 		assert gotUpdates : updates;
 	}
 	

@@ -20,11 +20,6 @@ public class LIPostRequest {
 	 */
 	public String url;
 	public String imgUrl;
-
-	/**
-	 * Can be null (will post as person)
-	 */
-	public String companyId;
 	
 	 /**
 	  * Privacy, true: Connections Only, false: Anyone

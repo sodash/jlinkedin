@@ -2,6 +2,11 @@ package com.sodash.jlinkedin.model;
 
 import winterwell.json.JSONObject;
 
+/**
+ * A job
+ * @author daniel
+ *
+ */
 public class LIPosition {
 
 	private JSONObject base;

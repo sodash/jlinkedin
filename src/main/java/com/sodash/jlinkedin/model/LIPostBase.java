@@ -52,20 +52,54 @@ public abstract class LIPostBase extends LIModelBase {
 //	}
 
 	public final String getTitle() {
+		JSONObject jc = getStatus();
+		if (jc!=null) {
+			return jc.optString("title");
+		}
 		throw new TodoException(base);
 	}
 	
+	JSONObject getStatus() {
+		JSONObject uc = base.optJSONObject("updateContent");
+		if (uc==null) return null;
+		JSONObject js = uc.optJSONObject("companyStatusUpdate");
+		if (js==null) {
+			js = uc.optJSONObject(""); // TODO
+			if (js==null) return null;
+		}
+		JSONObject js2 = js.optJSONObject("share");
+		if (js2!=null) return js2;
+		return js;
+	}
+
 	public final String getDescription() {
-		throw new TodoException(base);
+		JSONObject js = getStatus();
+		if (js==null) return null;
+		JSONObject jc = js.optJSONObject("content");
+		if (jc != null) {
+			String d = jc.optString("description");
+			return d;
+		}
+		return null;
 	}
 	
 	String sharedUrl;
 	
 	public final String getSharedUrl() {
-		if (true) throw new TodoException(base);
+		if (sharedUrl!=null) return sharedUrl;
+		sharedUrl = getStatusContentField("submittedImageUrl");
 		return sharedUrl;
 	}
 	
+	String getStatusContentField(String field) {
+		JSONObject js = getStatus();
+		if (js==null) return null;
+		JSONObject jc = js.optJSONObject("content");
+		if (jc==null) return null;
+		String v = jc.optString(field);
+		return v;
+	}
+
 	Object type;
 	
 	public final Object getType() {
@@ -176,8 +210,8 @@ public abstract class LIPostBase extends LIModelBase {
 	 * made by a Person, this will return null.
 	 * @return
 	 */
-	public final LICompany getCompany() {
-		if (company!=null) return company;
+	public LICompany getCompany() {
+		if (company!=null) return company;		
 		if( ! this.base.has("company")) return null;
 		return new LICompany(this.base.getJSONObject("company"));
 	}

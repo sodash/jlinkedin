@@ -6,6 +6,7 @@ import com.sodash.jlinkedin.JLinkedInGet;
 
 import winterwell.json.JSONObject;
 import winterwell.utils.TodoException;
+import winterwell.utils.web.SimpleJson;
 
 /**
  * A post / status-update / share. "Update" and "Share" are the terms LinkedIn API docs use. 
@@ -19,15 +20,34 @@ public class LIUpdate extends LIPostBase {
 	}
 		
 
-	public LIUpdate(JSONObject jobj, LIPostRequest post) {
+	public final String getImageUrl() {
+		String imgUrl = getStatusContentField("submittedImageUrl");
+		return imgUrl;
+	}
+
+	public LIUpdate(JSONObject jobj, LIPostRequest post, String companyId) {
 		this(jobj);
 		// fill in data
-		if (post.companyId!=null && getCompany()==null) {
-			company = new LICompany(post.companyId);
+		if (companyId!=null && getCompany()==null) {
+			company = new LICompany(companyId);
 		}
 		if (post.contents!=null && getContents()==null) {
 			setContents(post.contents);
 		}
+	}
+	
+	@Override
+	public LICompany getCompany() {
+		LICompany co = super.getCompany();
+		if (co!=null) return co;
+		JSONObject uc = base.optJSONObject("updateContent");
+		if (uc != null) {
+			JSONObject jco = uc.optJSONObject("company");
+			if (jco!=null) {
+				company = new LICompany(jco);
+			}
+		}
+		return company;
 	}
 
 

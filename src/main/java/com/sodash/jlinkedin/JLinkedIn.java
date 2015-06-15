@@ -12,7 +12,7 @@ public class JLinkedIn {
 	
 	String authToken;
 
-	public JLinkedInPost post() {
+	public JLinkedInPost postAsPerson() {
 		return new JLinkedInPost(this);
 	}
 	
@@ -38,6 +38,10 @@ public class JLinkedIn {
 
 	public JLinkedInSearch search() {
 		return new JLinkedInSearch(this);
+	}
+
+	public JLinkedInPost postAsCompany(String companyId) {
+		return new JLinkedInPost(this, companyId);
 	}
 
 

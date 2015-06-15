@@ -143,7 +143,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		}
 	}
 
-	public List<LIComment> getPostComments(String id) {
+	public ListResults<LIComment> getPostComments(String id) {
 		throw new TodoException();
 	}
 
@@ -157,11 +157,11 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		throw new TodoException();
 	}
 
-	public List<LIEvent> getUserUpdates(Set<NetworkUpdateType> ut) {
+	public List getUserUpdates(Set<NetworkUpdateType> ut) {
 		throw new TodoException();
 	}
 
-	public List<LIEvent> getUserUpdates(String id, Set<NetworkUpdateType> ut) {
+	public List getUserUpdates(String id, Set<NetworkUpdateType> ut) {
 		throw new TodoException();
 	}
 
@@ -199,6 +199,11 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		this.start = start;
 		this.count = count;
 		return this;
+	}
+
+	public ListResults<LIComment> getNetworkUpdateComments(
+			String networkUpdateKey) {
+		throw new TodoException(networkUpdateKey);
 	}
 
 }
