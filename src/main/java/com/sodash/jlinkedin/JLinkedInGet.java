@@ -25,6 +25,7 @@ import com.sodash.jlinkedin.model.LIEvent;
 import com.sodash.jlinkedin.model.LIGroup;
 import com.sodash.jlinkedin.model.LIGroupMembership;
 import com.sodash.jlinkedin.model.LIModelBase;
+import com.sodash.jlinkedin.model.LIPostBase;
 import com.sodash.jlinkedin.model.LIUpdate;
 import com.sodash.jlinkedin.model.ListResults;
 
@@ -147,8 +148,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		throw new TodoException();
 	}
 
-	public List<LIComment>  getPostsByGroup(String name, Set<PostField> postFields,
-			int i, int j, PostSortOrder recency, String string, Date date) {
+	public List<LIPostBase>  getPostsByGroup(String groupId, PostSortOrder recency, String type) {
 		throw new TodoException();
 	}
 

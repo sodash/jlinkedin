@@ -9,6 +9,8 @@ package com.sodash.jlinkedin;
  *
  */
 public class JLinkedIn {	
+
+	public static final String VERSION = "0.0.9";
 	
 	String authToken;
 
