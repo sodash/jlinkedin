@@ -7,6 +7,7 @@ import com.sodash.jlinkedin.JLinkedInGet;
 import winterwell.json.JSONObject;
 import winterwell.utils.StrUtils;
 import winterwell.utils.TodoException;
+import winterwell.utils.reporting.Log;
 import winterwell.utils.web.SimpleJson;
 
 /**
@@ -41,6 +42,12 @@ public class LIUpdate extends LIPostBase {
 		}
 	}
 	
+	public LIUpdate(LIEvent u) {
+		super(new JSONObject());
+		throw new TodoException(u);
+	}
+
+
 	@Override
 	public final String getContents() {
 		return getStatus().optString("comment");
