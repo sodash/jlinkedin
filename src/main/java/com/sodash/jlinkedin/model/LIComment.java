@@ -6,6 +6,7 @@ package com.sodash.jlinkedin.model;
 import java.util.List;
 
 import winterwell.json.JSONObject;
+import winterwell.utils.StrUtils;
 import winterwell.utils.TodoException;
 import winterwell.utils.time.Time;
 
@@ -13,7 +14,7 @@ import com.sodash.jlinkedin.fields.MessageType;
 
 
 /**
- * Unify all the many types of message LI offers
+ * Just for comments, which can only have a creator and some text (URLs aren't extracted).
  * @author daniel
  *
  */
@@ -23,4 +24,23 @@ public class LIComment extends LIPostBase {
 		super(base);		
 	}
 	
+	@Override
+	public String toString() {
+		return getClass().getSimpleName()+"["+getContents()+"]";
+	}
+	
+	// This stuff isn't buried in the Comment structure like it is in Updates
+	JSONObject getStatus() {
+		return base;
+	}
+	
+	@Override
+	public String getContents() {
+		return base.optString("comment");
+	}
+
+	@Override
+	public String getId() {
+		return base.optString("id");
+	}
 }

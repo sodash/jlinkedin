@@ -2,6 +2,8 @@ package com.sodash.jlinkedin.model;
 
 import java.util.List;
 
+import com.sodash.jlinkedin.fields.NetworkUpdateReturnType;
+
 import winterwell.json.JSONObject;
 import winterwell.utils.StrUtils;
 import winterwell.utils.TodoException;
@@ -14,22 +16,22 @@ public abstract class LIPostBase extends LIModelBase {
 	}
 
 	/**
-	 * Get the message's ID or Update Key
+	 * Get the message's ID
 	 * Comments have property "id"
 	 * Updates (aka Shares) have property "updateKey"
 	 */
-	public final String getId() {
-		if(this.base.has("id")) {			
-			return super.getId();
-		} else if(this.base.has("updateKey")) {
-			assert ! (this instanceof LIComment);
-			return this.base.getString("updateKey");
-		} else return null;
+	public abstract String getId();
+	
+	/**
+	 * Update key is of the form UPDATE-c9750841-6014790980211867648
+	 * or UPDATE-companyid-updateid
+	 * @return
+	 */
+	public final String getUpdateKey() {
+		return this.base.optString("updateKey");
 	}
 	
-	public String toString() {
-		return getClass().getSimpleName()+"["+StrUtils.joinWithSkip(" ", getTitle(), getDescription(), getContents(), getSharedUrl())+"]";
-	}
+	public abstract String toString();
 	
 	String contents;
 	
@@ -51,14 +53,6 @@ public abstract class LIPostBase extends LIModelBase {
 //		}
 //	}
 
-	public final String getTitle() {
-		JSONObject jc = getStatus();
-		if (jc!=null) {
-			return jc.optString("title");
-		}
-		throw new TodoException(base);
-	}
-	
 	JSONObject getStatus() {
 		JSONObject uc = base.optJSONObject("updateContent");
 		if (uc==null) return null;
@@ -72,136 +66,48 @@ public abstract class LIPostBase extends LIModelBase {
 		return js;
 	}
 
-	public final String getDescription() {
-		JSONObject js = getStatus();
-		if (js==null) return null;
-		JSONObject jc = js.optJSONObject("content");
-		if (jc != null) {
-			String d = jc.optString("description");
-			return d;
-		}
-		return null;
-	}
-	
-	String sharedUrl;
-	
-	public final String getSharedUrl() {
-		if (sharedUrl!=null) return sharedUrl;
-		sharedUrl = getStatusContentField("submittedImageUrl");
-		return sharedUrl;
-	}
-	
-	String getStatusContentField(String field) {
-		JSONObject js = getStatus();
-		if (js==null) return null;
-		JSONObject jc = js.optJSONObject("content");
-		if (jc==null) return null;
-		String v = jc.optString(field);
-		return v;
-	}
-
 	Object type;
 	
 	public final Object getType() {
+		if(type == null) {
+			try {
+				type = NetworkUpdateReturnType.fromValue(base.getString("updateType"));	
+			} catch (IllegalArgumentException e) {}
+		}
 		assert type != null : this;
 		return type;
 	}
 
-	public final String getPublicUrl() {
-		throw new TodoException(base);
-	}
-
-	public final String getContents() {
-//		CompanyJobUpdate cju = uc.getCompanyJobUpdate();
-//		CompanyPersonUpdate cpu = uc.getCompanyPersonUpdate();		
-//		CompanyStatusUpdate csu = uc.getCompanyStatusUpdate();
-//		UpdateAction action = uc.getUpdateAction();
-//		if (csu!=null && csu.getShare()!=null) {
-//			Share s = csu.getShare();
-//			contents = s.getComment();
-//			// TODO are we going to need these sub-ids?
-//			// this.id = s.getId();
-//			Content con = s.getContent();
-//			if (con != null){
-//			setFromContent(con);
-//			}
-//		}
-//		CompanyProfileUpdate cpu2 = uc.getCompanyProfileUpdate();				
-
-
-//		public final static String getActivityString(Update u) {
-//			List<Activity> acts = u.getUpdateContent().getPerson()
-//					.getPersonActivities().getActivityList();
-//			Activity act = acts.get(0);
-//			return act.getBody();
-//		}
-//
-//		public final String getCurrentStatusString(Update u) {
-//			String status = u.getUpdateContent().getPerson().getCurrentStatus();
-//			return status;
-//		}
-//		if (type != null && type.equals(NetworkUpdateReturnType.APPLICATION_CONNECTION_UPDATE)){
-//			contents = LIMailClient.getActivityString(u);
-//			return;
-//		}
-//		contents = StrUtils.join(Arrays.asList(title, url, desc), " ");
-//		
-//		if (Utils.isBlank(contents)) {
-//			
-//			
-//			if (type == NetworkUpdateReturnType.STATUS_UPDATED) {
-//				contents = person1.getCurrentStatus();
-//			} else if (type == NetworkUpdateReturnType.SHARED_ITEM) {
-//				CurrentShare cs = person1.getCurrentShare();
-//				Content s = cs.getContent();
-//				if (s != null)
-//					setFromContent(s);
-//				else {
-//					contents = cs.getComment();
-//				}
-//			} else if (person1 != null
-//					&& person1.getRecommendationsGiven() != null
-//					&& person1.getRecommendationsGiven().getTotal() != 0) {
-//				// Recommendees?
-//				RecommendationsGiven recommendations = u.getUpdateContent()
-//						.getPerson().getRecommendationsGiven();
-//				// FIXME!!!
-//				contents = XStreamUtils.serialiseToXml(recommendations);
-//			} else {
-//				// fail
-//			}
-//		}
-
-		
-		return contents;
+	public String getPublicUrl() {
+		return null;
 	}
 	
-	public final Object getAttachments() {
-		throw new TodoException(getType()+" "+base);
+	public static String publicUrlForId(String id) {
+		return "//www.linkedin.com/nhome/updates?topic=" + id;
+	}
+
+	public String getContents() {
+		if(contents != null) return contents;
+		return this.getStatus().optString("comment");
 	}
 
 	public final void setContents(String contents) {
 		this.contents = contents;
 	}
 
-	/**
-	 * Non-partner API calls can only return status updates from companies, so
-	 * this should always yield an LICompany when called on an Update.
-	 * Comments can be made by Companies or People - if called on a Comment
-	 * made by a Person, this will return null.
-	 * @return
-	 */
-	public final LIProfile getCreator() {
-		if( ! this.base.has("person")) return null;
-		return new LIProfile(this.base.getJSONObject("person"));
-	}	
-
 	public final Time getCreatedTime() {
-		if(!this.base.has("timestamp")) return null;
+		if(!this.getStatus().has("timestamp")) return null;
 		return new Time(this.base.getLong("timestamp"));
 	}
 	
 	LICompany company;
+	LIProfile person;
+	
+	public final LIProfile getCreator() {
+		if (person != null) return person;
+		if( ! this.base.has("person")) return null;
+		return new LIProfile(this.base.getJSONObject("person"));
+	}	
 	
 	/**
 	 * Non-partner API calls can only return status updates from companies, so
@@ -210,11 +116,20 @@ public abstract class LIPostBase extends LIModelBase {
 	 * made by a Person, this will return null.
 	 * @return
 	 */
-	public LICompany getCompany() {
-		if (company!=null) return company;		
+	public final LICompany getCompany() {
+		if (company != null) return company;		
 		if( ! this.base.has("company")) return null;
 		return new LICompany(this.base.getJSONObject("company"));
 	}
+	
+	/**
+	 * Classes that can have explicit shared-content information should override this
+	 * @return
+	 */
+	public JSONObject getAttachment() {
+		return null;
+	}
+
 
 
 }
