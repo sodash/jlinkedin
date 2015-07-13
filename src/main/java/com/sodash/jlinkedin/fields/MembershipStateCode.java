@@ -17,8 +17,6 @@
 
 package com.sodash.jlinkedin.fields;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
 
 
 /**
@@ -42,24 +40,23 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * </pre>
  * 
  */
-@XmlEnum
 public enum MembershipStateCode {
 
-    @XmlEnumValue("blocked")
+    
     BLOCKED("blocked"),
-    @XmlEnumValue("non-member")
+    
     NON_MEMBER("non-member"),
-    @XmlEnumValue("awaiting-confirmation")
+    
     AWAITING_CONFIRMATION("awaiting-confirmation"),
-    @XmlEnumValue("awaiting-parent-group-confirmation")
+    
     AWAITING_PARENT_GROUP_CONFIRMATION("awaiting-parent-group-confirmation"),
-    @XmlEnumValue("member")
+    
     MEMBER("member"),
-    @XmlEnumValue("moderator")
+    
     MODERATOR("moderator"),
-    @XmlEnumValue("manager")
+    
     MANAGER("manager"),
-    @XmlEnumValue("owner")
+    
     OWNER("owner");
     private final String value;
 

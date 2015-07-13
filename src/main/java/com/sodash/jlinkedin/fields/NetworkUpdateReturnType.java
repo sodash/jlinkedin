@@ -17,8 +17,6 @@
 
 package com.sodash.jlinkedin.fields;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
 
 
 /**
@@ -51,42 +49,41 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * </pre>
  * 
  */
-@XmlEnum
 public enum NetworkUpdateReturnType {
 
-    @XmlEnumValue("ANSW")
+    
     ANSWER_UPDATE("ANSW"),
-    @XmlEnumValue("APPM")
+    
     APPLICATION_CONNECTION_UPDATE("APPM"),
-    @XmlEnumValue("APPS")
+    
     APPLICATION_TO_MEMBER_UPDATE("APPS"),
-    @XmlEnumValue("CONN")
+    
     CONNECTION_ADDED_CONNECTIONS("CONN"),
-    @XmlEnumValue("NCON")
+    
     NEW_CONNECTIONS("NCON"),
-    @XmlEnumValue("CCEM")
+    
     CONTACT_JOINED("CCEM"),
-    @XmlEnumValue("JOBP")
+    
     JOB_POSTED("JOBP"),
-    @XmlEnumValue("JGRP")
+    
     CONNECTION_JOINED_GROUP("JGRP"),
-    @XmlEnumValue("PICU")
+    
     CONNECTION_UPDATED_PICTURE("PICU"),
-    @XmlEnumValue("PREC")
+    
     CONNECTION_RECOMMENDED("PREC"),
-    @XmlEnumValue("PROF")
+    
     CONNECTION_UPDATED_PROFILE("PROF"),
-    @XmlEnumValue("QSTN")
+    
     QUESTION_UPDATED("QSTN"),
-    @XmlEnumValue("STAT")
+    
     STATUS_UPDATED("STAT"),
-    @XmlEnumValue("PRFX")
+    
     EXTENDED_PROFILE_UPDATED("PRFX"),
-    @XmlEnumValue("SHAR")
+    
     SHARED_ITEM("SHAR"),
-    @XmlEnumValue("CMPY")
+    
     COMPANY_UPDATED("CMPY"),
-    @XmlEnumValue("VIRL")
+    
     VIRAL_UPDATE("VIRL");
     private final String value;
 

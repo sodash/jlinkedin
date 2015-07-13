@@ -17,9 +17,6 @@
 
 package com.sodash.jlinkedin.fields;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
-
 
 /**
  * <p>Java class for null.
@@ -37,14 +34,12 @@ import javax.xml.bind.annotation.XmlEnumValue;
  * </pre>
  * 
  */
-@XmlEnum
 public enum VisibilityType {
 
-    @XmlEnumValue("anyone")
     ANYONE("anyone"),
-    @XmlEnumValue("all-members")
+
     ALL_MEMBERS("all-members"),
-    @XmlEnumValue("connections-only")
+    
     CONNECTIONS_ONLY("connections-only");
     private final String value;
 
