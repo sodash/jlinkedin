@@ -34,10 +34,10 @@ public class LIUpdate extends LIPostBase {
 	public LIUpdate(JSONObject jobj, LIPostRequest post, String companyId) {
 		this(jobj);
 		// fill in data
-		if (companyId!=null && getCompany()==null) {
+		if (companyId != null && getCompany() == null) {
 			company = new LICompany(companyId);
 		}
-		if (post.contents!=null && getContents()==null) {
+		if (post.contents != null && getContents() == null) {
 			setContents(post.contents);
 		}
 	}
@@ -47,11 +47,6 @@ public class LIUpdate extends LIPostBase {
 		throw new TodoException(u);
 	}
 
-
-	@Override
-	public final String getContents() {
-		return getStatus().optString("comment");
-	}
 	
 	@Override
 	public String getPublicUrl() {
