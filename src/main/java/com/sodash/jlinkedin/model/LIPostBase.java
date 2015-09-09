@@ -35,23 +35,6 @@ public abstract class LIPostBase extends LIModelBase {
 	
 	String contents;
 	
-//	/**
-//	 * Set contents & stuff from a Content object
-//	 * @param con
-//	 */
-//	private void setFromContent(Content con) {
-//		String id2 = con.getId();
-//		url = con.getResolvedUrl();
-//		if (url==null) url = con.getSubmittedUrl();
-//		imgUrl = con.getSubmittedImageUrl();
-//		title = con.getTitle();
-//		desc = con.getDescription();
-//	//	assert Utils.isBlank(contents) : contents+" in "+this;
-//		contents = StrUtils.join(Arrays.asList(url, imgUrl, desc), "\n");
-//		if ( ! Utils.equals(id2, id)) {
-//			System.out.println("ID CLASH:\t"+id+"\tvs\t"+id2);
-//		}
-//	}
 
 	JSONObject getStatus() {
 		JSONObject uc = base.optJSONObject("updateContent");

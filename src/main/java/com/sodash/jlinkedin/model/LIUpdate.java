@@ -50,7 +50,12 @@ public class LIUpdate extends LIPostBase {
 
 	@Override
 	public final String getContents() {
-		return getStatus().optString("comment");
+		JSONObject s = getStatus();
+		if (s==null) {		
+			return null;
+		}
+		String comment = s.optString("comment");
+		return comment;
 	}
 	
 	@Override

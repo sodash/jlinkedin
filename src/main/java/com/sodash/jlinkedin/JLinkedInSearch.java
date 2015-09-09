@@ -13,6 +13,12 @@ import com.sodash.jlinkedin.model.LICompany;
 import com.sodash.jlinkedin.model.LIProfile;
 import com.sodash.jlinkedin.model.ListResults;
 
+/**
+ * Does the LinkedIn API offer any search??	
+ * @author daniel
+ *
+ */
+@Deprecated 
 public class JLinkedInSearch extends JLinkedInAPIFacet<JLinkedInSearch> {
 
 	public JLinkedInSearch(JLinkedIn jLinkedIn) {
@@ -27,7 +33,8 @@ public class JLinkedInSearch extends JLinkedInAPIFacet<JLinkedInSearch> {
 
 	public ListResults<LIProfile> searchPeople(
 			Map<SearchParameter, String> searchParameters,
-			Set<ProfileField> pfs, Set<FacetField> ffs) {
+			Set<ProfileField> pfs, Set<FacetField> ffs) 
+	{
 		// TODO Auto-generated method stub
 		throw new TodoException();
 	}
