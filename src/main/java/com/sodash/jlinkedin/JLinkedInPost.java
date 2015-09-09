@@ -86,6 +86,7 @@ public class JLinkedInPost extends JLinkedInAPIFacet {
 		String json = post(jsonUrl, postData);		
 
 		JSONObject jobj = new JSONObject(json);
+		
 		// update key: has UPDATE-c{companyid}-{topicid}
 		// or UPDATE-{personid}-{topicid}
 		LIUpdate m = new LIUpdate(jobj,post,companyId);

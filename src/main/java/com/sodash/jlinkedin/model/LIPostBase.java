@@ -69,9 +69,17 @@ public abstract class LIPostBase extends LIModelBase {
 		return "//www.linkedin.com/nhome/updates?topic=" + id;
 	}
 
+	/**
+	 * Returning null is OK here - sometimes we synthesise an LIPostBase (or derived class) and 
+	 * @return
+	 */
 	public String getContents() {
 		if(contents != null) return contents;
-		return this.getStatus().optString("comment");
+		if(getStatus() != null) {
+			String comment = getStatus().optString("comment");
+			return comment;
+		}
+		return null;
 	}
 
 	public final void setContents(String contents) {
