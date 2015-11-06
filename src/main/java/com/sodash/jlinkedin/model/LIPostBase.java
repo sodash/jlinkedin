@@ -7,6 +7,7 @@ import com.sodash.jlinkedin.fields.NetworkUpdateReturnType;
 import winterwell.json.JSONObject;
 import winterwell.utils.StrUtils;
 import winterwell.utils.TodoException;
+import winterwell.utils.reporting.Log;
 import winterwell.utils.time.Time;
 
 public abstract class LIPostBase extends LIModelBase {
@@ -38,11 +39,16 @@ public abstract class LIPostBase extends LIModelBase {
 
 	JSONObject getStatus() {
 		JSONObject uc = base.optJSONObject("updateContent");
-		if (uc==null) return null;
+		if (uc==null) {
+			Log.d("linkedin", "getStatus no updateContent in "+base.toString());
+			return null;
+		}
 		JSONObject js = uc.optJSONObject("companyStatusUpdate");
 		if (js==null) {
-			js = uc.optJSONObject(""); // TODO
-			if (js==null) return null;
+			Log.d("linkedin", "getStatus no csu in "+base.toString());
+//			js = uc.optJSONObject(""); // TODO
+//			if (js==null) 
+			return null;
 		}
 		JSONObject js2 = js.optJSONObject("share");
 		if (js2!=null) return js2;
@@ -86,9 +92,20 @@ public abstract class LIPostBase extends LIModelBase {
 		this.contents = contents;
 	}
 
-	public final Time getCreatedTime() {
-		if(!this.getStatus().has("timestamp")) return null;
-		return new Time(this.base.getLong("timestamp"));
+	/**
+	 * Can be null
+	 * @return
+	 */
+	public final Time getCreatedTime() {		
+		if (base.has("timestamp")) {
+			return new Time(this.base.getLong("timestamp"));
+		}
+		JSONObject s = this.getStatus();
+		if (s!=null && s.has("timestamp")) {
+			return new Time(s.getLong("timestamp"));
+		}
+		Log.d("linkedin", "No timestamp for "+getClass()+" "+getId());
+		return null;
 	}
 	
 	LICompany company;
