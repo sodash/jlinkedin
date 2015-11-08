@@ -73,6 +73,17 @@ public class JLinkedInGetTest {
 	}
 	
 	@Test
+	public void testGetSelfridgesBug() {
+		JLinkedIn jli;
+		String token = "AQVs4x771QJkCqHBwVjr6PO30mFVRoSpaFrqBiYssdyQ6jPRFKronz5Duc20ASn7efSIofKk6R28BhlhsQwNBuVFsbk50M8TBRPpYwr9uiUKWUHjRoUU5zvUj2E2AOauiVZQfJi1pPrKDsPXb_Q3cAuLEy_J3-cQjI0UgoO7KFKMmXZs_fs"; 				
+		String uk = "UPDATE-c17250-6052839838036561920";
+		jli = new JLinkedIn().setAuthToken(token);
+		String companyId = "17250";
+		ListResults<LIComment> got = jli.get().getCompanyUpdateComments(companyId, uk);
+		System.out.println(got);
+	}
+	
+	@Test
 	public void testGetCompanyUpdate() {
 
 		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN_SPOON);

@@ -101,6 +101,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 	public ListResults<LIComment> getCompanyUpdateComments(String companyId, String updateKey) {
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates/key="+updateKey+"/update-comments";
 		String json = getPage(jsonUrl, new ArrayMap());
+		assert json != null : jsonUrl;
 		return toResults(json, LIComment.class);
 	}
 	
@@ -120,7 +121,11 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 
 
 	public static <LI extends LIModelBase> ListResults<LI> toResults(String json, Class<LI> class1) {
-		return toResults(new JSONObject(json), class1);
+		assert json != null;
+		if (json==null || "null".equals(json)) {
+			return new ListResults();
+		}
+		return toResults(new JSONObject(json), class1);		
 	}
 	public static <LI extends LIModelBase> ListResults<LI> toResults(JSONObject jobj, Class<LI> class1) {
 		try {			

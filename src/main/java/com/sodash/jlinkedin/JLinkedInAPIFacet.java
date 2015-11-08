@@ -43,6 +43,7 @@ abstract class JLinkedInAPIFacet<SubType extends JLinkedInAPIFacet> implements I
 		fb.setRequestHeader("Authorization", "Bearer "+jli.authToken);
 		vars = addStdParams(vars);
 		String page = fb.getPage(url, vars);
+		assert page != null : url+" "+vars;
 		return page;
 	}
 	
