@@ -76,7 +76,7 @@ public abstract class LIPostBase extends LIModelBase {
 	}
 
 	/**
-	 * Returning null is OK here - sometimes we synthesise an LIPostBase (or derived class) and 
+	 * Returning null is OK here - when posting we synthesise an LIPostBase or derived class instead of constructing from JSON.
 	 * @return
 	 */
 	public String getContents() {
