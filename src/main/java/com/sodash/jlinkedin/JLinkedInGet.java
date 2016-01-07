@@ -24,6 +24,7 @@ import com.sodash.jlinkedin.model.LICompany;
 import com.sodash.jlinkedin.model.LIEvent;
 import com.sodash.jlinkedin.model.LIGroup;
 import com.sodash.jlinkedin.model.LIGroupMembership;
+import com.sodash.jlinkedin.model.LIJobPosting;
 import com.sodash.jlinkedin.model.LIModelBase;
 import com.sodash.jlinkedin.model.LIPostBase;
 import com.sodash.jlinkedin.model.LIUpdate;
@@ -89,7 +90,9 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 			params.put("event-type", eventType);
 		}		
 		String json = getPage(jsonUrl, params);
-		return toResults(json, LIUpdate.class);
+		
+		return toResultsAuto(json);
+
 	}
 	
 	public LIUpdate getCompanyUpdate(String companyId, String updateKey) {
@@ -117,9 +120,6 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		return new LIGroup(gid, html);
 	}
 	
-
-
-
 	public static <LI extends LIModelBase> ListResults<LI> toResults(String json, Class<LI> class1) {
 		assert json != null;
 		if (json==null || "null".equals(json)) {
@@ -127,6 +127,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		}
 		return toResults(new JSONObject(json), class1);		
 	}
+	
 	public static <LI extends LIModelBase> ListResults<LI> toResults(JSONObject jobj, Class<LI> class1) {
 		try {			
 			int total = jobj.optInt("_total");
@@ -142,6 +143,45 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 			for(JSONObject v : vs) {
 				LI obj = cons.newInstance(v);
 				list.add(obj);
+			}
+			return list;
+		} catch(Exception ex) {
+			throw Utils.runtime(ex);
+		}
+	}
+	
+	/**
+	 * Turns a JSON list, known to be a mix of status-updates and job-postings, into a list of LIUpdates and LIJobPostings.
+	 * @param json
+	 * @return
+	 */
+	public static ListResults<LIModelBase> toResults(String json) {
+		assert json != null;
+		if (json==null || "null".equals(json)) {
+			return new ListResults();
+		}
+		return toResultsAuto(new JSONObject(json));		
+	}
+	
+	public static ListResults<LIModelBase> toResultsAuto(JSONObject jobj) {
+		try {			
+			int total = jobj.optInt("_total");
+			JSONArray vs = jobj.optJSONArray("values");
+			if (vs == null) {
+				assert total == 0;
+				return new ListResults<LIModelBase>();
+			}
+			
+			ListResults<LIModelBase> list = new ListResults<LIModelBase>();
+			list.setTotal(total);
+			Constructor<LIUpdate> updateCons = LIUpdate.class.getConstructor(JSONObject.class);
+			Constructor<LIJobPosting> jobCons = LIJobPosting.class.getConstructor(JSONObject.class);
+			
+			for(JSONObject v : vs) {
+				JSONObject content = v.optJSONObject("updateContent");
+				if (content == null) continue;
+				if (content.has("companyStatusUpdate")) list.add(updateCons.newInstance(v));
+				else if (content.has("companyJobUpdate")) list.add(jobCons.newInstance(v));
 			}
 			return list;
 		} catch(Exception ex) {

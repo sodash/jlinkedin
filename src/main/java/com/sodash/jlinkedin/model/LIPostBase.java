@@ -45,7 +45,7 @@ public abstract class LIPostBase extends LIModelBase {
 		}
 		JSONObject js = uc.optJSONObject("companyStatusUpdate");
 		if (js==null) {
-			Log.d("linkedin", "getStatus no csu in "+base.toString());
+			Log.d("linkedin", "getStatus no csu in " + base.toString());
 //			js = uc.optJSONObject(""); // TODO
 //			if (js==null) 
 			return null;
@@ -53,6 +53,20 @@ public abstract class LIPostBase extends LIModelBase {
 		JSONObject js2 = js.optJSONObject("share");
 		if (js2!=null) return js2;
 		return js;
+	}
+	
+	JSONObject getJob() {
+		JSONObject uc = base.optJSONObject("updateContent");
+		if (uc==null) {
+			Log.d("linkedin", "getStatus no updateContent in " + base.toString());
+			return null;
+		}
+		JSONObject js = uc.optJSONObject("companyJobUpdate");
+		if (js==null) {
+			Log.d("linkedin", "getJob no companyJobUpdate in " + base.toString());
+			return null;
+		}
+		return js.optJSONObject("job");
 	}
 
 	Object type;
