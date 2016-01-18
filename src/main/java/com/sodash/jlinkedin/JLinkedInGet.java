@@ -71,7 +71,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 	}
 	
 	public LICompany getCompanyById(String companyId) {
-		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId;
+		String jsonUrl = "https://api.linkedin.com/v1/companies/" + companyId + ":(id,name,logo-url,square-logo-url,locations,num-followers)";
 		String json = getPage(jsonUrl, new ArrayMap());
 		return new LICompany(new JSONObject(json));
 	}

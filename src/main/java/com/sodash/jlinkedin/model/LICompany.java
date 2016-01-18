@@ -39,7 +39,7 @@ public class LICompany extends LIEntity {
 	}
 
 	public String getImageUrl() {
-		return Utils.or(base.optString("square-logo-url"), base.optString("logo-url"));
+		return Utils.or(base.optString("squareLogoUrl"), base.optString("logoUrl"));
 	}
 
 	public String getPublicUrl() {
