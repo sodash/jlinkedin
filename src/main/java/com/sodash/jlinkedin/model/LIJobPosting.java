@@ -51,9 +51,7 @@ public class LIJobPosting extends LIPostBase {
 	JSONObject getJobField(String field) {
 		JSONObject job = getJob();
 		if (job == null) return null;
-		JSONObject jc = job.optJSONObject("content");
-		if (jc == null) return null;
-		JSONObject v = jc.optJSONObject(field);
+		JSONObject v = job.optJSONObject(field);
 		return v;
 	}
 	

@@ -82,7 +82,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 	 * @param eventType Can be null
 	 * @return
 	 */
-	public ListResults<LIUpdate> getCompanyUpdates(String companyId, UpdateType eventType) {
+	public ListResults<LIPostBase> getCompanyUpdates(String companyId, UpdateType eventType) {
 		assert companyId!=null;
 		String jsonUrl = "https://api.linkedin.com/v1/companies/"+companyId+"/updates";
 		Map params = new ArrayMap();
@@ -91,7 +91,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		}		
 		String json = getPage(jsonUrl, params);
 		
-		return toResultsAuto(json);
+		return toResults(json);
 
 	}
 	
@@ -155,7 +155,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 	 * @param json
 	 * @return
 	 */
-	public static ListResults<LIModelBase> toResults(String json) {
+	public static ListResults<LIPostBase> toResults(String json) {
 		assert json != null;
 		if (json==null || "null".equals(json)) {
 			return new ListResults();
@@ -163,16 +163,16 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		return toResultsAuto(new JSONObject(json));		
 	}
 	
-	public static ListResults<LIModelBase> toResultsAuto(JSONObject jobj) {
+	public static ListResults<LIPostBase> toResultsAuto(JSONObject jobj) {
 		try {			
 			int total = jobj.optInt("_total");
 			JSONArray vs = jobj.optJSONArray("values");
 			if (vs == null) {
 				assert total == 0;
-				return new ListResults<LIModelBase>();
+				return new ListResults<LIPostBase>();
 			}
 			
-			ListResults<LIModelBase> list = new ListResults<LIModelBase>();
+			ListResults<LIPostBase> list = new ListResults<LIPostBase>();
 			list.setTotal(total);
 			Constructor<LIUpdate> updateCons = LIUpdate.class.getConstructor(JSONObject.class);
 			Constructor<LIJobPosting> jobCons = LIJobPosting.class.getConstructor(JSONObject.class);
