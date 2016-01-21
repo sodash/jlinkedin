@@ -151,7 +151,7 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 	}
 	
 	/**
-	 * Turns a JSON list, known to be a mix of status-updates and job-postings, into a list of LIUpdates and LIJobPostings.
+	 * Turns a string-form JSON list, known to be a mix of status-updates and job-postings, into a list of LIUpdates and LIJobPostings.
 	 * @param json
 	 * @return
 	 */
@@ -163,6 +163,11 @@ public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {
 		return toResultsAuto(new JSONObject(json));		
 	}
 	
+	/**
+	 * Turns a JSON list, known to be a mix of status-updates and job-postings, into a list of LIUpdates and LIJobPostings.
+	 * @param json
+	 * @return
+	 */
 	public static ListResults<LIPostBase> toResultsAuto(JSONObject jobj) {
 		try {			
 			int total = jobj.optInt("_total");
