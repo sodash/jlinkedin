@@ -13,6 +13,7 @@ import winterwell.utils.containers.ArrayMap;
 import com.sodash.jlinkedin.model.LIComment;
 import com.sodash.jlinkedin.model.LICompany;
 import com.sodash.jlinkedin.model.LIGroup;
+import com.sodash.jlinkedin.model.LIPostBase;
 import com.sodash.jlinkedin.model.LIUpdate;
 import com.sodash.jlinkedin.model.LIEvent;
 import com.sodash.jlinkedin.model.ListResults;
@@ -64,9 +65,9 @@ public class JLinkedInGetTest {
 	@Test
 	public void testGetCompanyUpdates() {
 		JLinkedIn jli = new JLinkedIn().setAuthToken(JLinkedInTest.TEST_OAUTH_TOKEN_SPOON);
-		List<LIUpdate> updates = jli.get().getCompanyUpdates(socialCutleryId, null);
+		List<LIPostBase> updates = jli.get().getCompanyUpdates(socialCutleryId, null);
 		assert updates != null;
-		LIUpdate u0 = updates.get(0);
+		LIPostBase u0 = updates.get(0);
 		LICompany co0 = u0.getCompany();
 		boolean gotUpdates = socialCutleryId.equals(co0.getId());
 		assert gotUpdates : updates;
