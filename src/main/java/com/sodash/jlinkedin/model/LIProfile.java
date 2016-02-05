@@ -7,12 +7,12 @@ import java.util.List;
 import com.sodash.jlinkedin.fields.ProfileField;
 import com.winterwell.jgeoplanet.IPlace;
 import com.winterwell.jgeoplanet.SimplePlace;
+import com.winterwell.utils.web.SimpleJson;
 
 import creole.data.XId;
 import winterwell.json.JSONArray;
 import winterwell.json.JSONObject;
 import winterwell.utils.StrUtils;
-import winterwell.utils.web.SimpleJson;
 
 public class LIProfile extends LIEntity {
 	

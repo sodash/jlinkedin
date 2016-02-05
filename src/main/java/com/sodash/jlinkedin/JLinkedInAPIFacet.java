@@ -8,12 +8,12 @@ import winterwell.utils.StrUtils;
 import winterwell.utils.Utils;
 import winterwell.utils.containers.ArrayMap;
 import winterwell.utils.containers.IOneShot;
-import winterwell.utils.web.SimpleJson;
 import winterwell.utils.web.WebUtils;
 import winterwell.web.FakeBrowser;
 
 import com.sodash.jlinkedin.fields.FieldEnum;
 import com.sodash.jlinkedin.model.LIProfile;
+import com.winterwell.utils.web.SimpleJson;
 import com.winterwell.utils.web.WebUtils2;
 
 abstract class JLinkedInAPIFacet<SubType extends JLinkedInAPIFacet> implements IOneShot {
