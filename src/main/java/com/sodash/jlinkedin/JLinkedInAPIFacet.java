@@ -4,12 +4,11 @@ import java.util.Collection;
 import java.util.Map;
 
 import winterwell.json.JSONObject;
-import winterwell.utils.StrUtils;
-import winterwell.utils.Utils;
-import winterwell.utils.containers.ArrayMap;
+import com.winterwell.utils.StrUtils;
+import com.winterwell.utils.Utils;
+import com.winterwell.utils.containers.ArrayMap;
 import winterwell.utils.containers.IOneShot;
-import winterwell.utils.web.WebUtils;
-import winterwell.web.FakeBrowser;
+import com.winterwell.web.FakeBrowser;
 
 import com.sodash.jlinkedin.fields.FieldEnum;
 import com.sodash.jlinkedin.model.LIProfile;
