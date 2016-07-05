@@ -8,7 +8,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import winterwell.json.JSONObject;
-import winterwell.utils.containers.ArrayMap;
+import com.winterwell.utils.containers.ArrayMap;
 
 import com.sodash.jlinkedin.model.LIComment;
 import com.sodash.jlinkedin.model.LICompany;

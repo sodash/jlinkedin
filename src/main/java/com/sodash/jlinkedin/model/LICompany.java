@@ -4,7 +4,7 @@ import com.sodash.jlinkedin.fields.CompanyField;
 
 import winterwell.json.JSONObject;
 import winterwell.utils.Utils;
-import winterwell.utils.containers.ArrayMap;
+import com.winterwell.utils.containers.ArrayMap;
 
 /**
  * {@link CompanyField}

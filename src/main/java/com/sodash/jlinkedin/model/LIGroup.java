@@ -6,7 +6,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import winterwell.json.JSONObject;
-import winterwell.utils.containers.ArrayMap;
+import com.winterwell.utils.containers.ArrayMap;
 import winterwell.utils.web.WebUtils;
 
 import com.sodash.jlinkedin.fields.GroupField;

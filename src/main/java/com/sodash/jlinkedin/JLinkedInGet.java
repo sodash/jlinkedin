@@ -1,7 +1,6 @@
 package com.sodash.jlinkedin;
 
 import java.lang.reflect.Constructor;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,13 +9,10 @@ import winterwell.json.JSONArray;
 import winterwell.json.JSONObject;
 import winterwell.utils.TodoException;
 import winterwell.utils.Utils;
-import winterwell.utils.containers.ArrayMap;
+import com.winterwell.utils.containers.ArrayMap;
 import winterwell.utils.time.Time;
 
-import com.sodash.jlinkedin.fields.CompanyField;
-import com.sodash.jlinkedin.fields.GroupMembershipField;
 import com.sodash.jlinkedin.fields.NetworkUpdateType;
-import com.sodash.jlinkedin.fields.PostField;
 import com.sodash.jlinkedin.fields.PostSortOrder;
 import com.sodash.jlinkedin.fields.UpdateType;
 import com.sodash.jlinkedin.model.LIComment;

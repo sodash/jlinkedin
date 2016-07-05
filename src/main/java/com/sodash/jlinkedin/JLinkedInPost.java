@@ -12,7 +12,7 @@ import com.sodash.jlinkedin.model.LIUpdate;
 import winterwell.json.JSONObject;
 import winterwell.utils.StrUtils;
 import winterwell.utils.TodoException;
-import winterwell.utils.containers.ArrayMap;
+import com.winterwell.utils.containers.ArrayMap;
 import winterwell.utils.containers.IOneShot;
 
 /**
