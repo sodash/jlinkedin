@@ -1,9 +1,9 @@
 package com.sodash.jlinkedin.model;
 
-import com.sodash.jlinkedin.fields.CompanyField;
-
 import winterwell.json.JSONObject;
 import winterwell.utils.Utils;
+
+import com.sodash.jlinkedin.fields.CompanyField;
 import com.winterwell.utils.containers.ArrayMap;
 
 /**

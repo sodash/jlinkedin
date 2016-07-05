@@ -2,15 +2,11 @@ package com.sodash.jlinkedin.model;
 
 import java.util.List;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
 import winterwell.json.JSONObject;
-import com.winterwell.utils.containers.ArrayMap;
 import winterwell.utils.web.WebUtils;
 
 import com.sodash.jlinkedin.fields.GroupField;
-import com.sodash.jlinkedin.fields.ProfileField;
+import com.winterwell.utils.containers.ArrayMap;
 import com.winterwell.utils.web.WebUtils2;
 
 public class LIGroup extends LIModelBase {

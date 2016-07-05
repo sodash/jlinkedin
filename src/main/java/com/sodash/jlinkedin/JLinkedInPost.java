@@ -3,17 +3,16 @@ package com.sodash.jlinkedin;
 import java.util.List;
 import java.util.Map;
 
+import winterwell.json.JSONObject;
+import winterwell.utils.StrUtils;
+import winterwell.utils.TodoException;
+
 import com.sodash.jlinkedin.fields.VisibilityType;
 import com.sodash.jlinkedin.model.LIComment;
 import com.sodash.jlinkedin.model.LIPostBase;
 import com.sodash.jlinkedin.model.LIPostRequest;
 import com.sodash.jlinkedin.model.LIUpdate;
-
-import winterwell.json.JSONObject;
-import winterwell.utils.StrUtils;
-import winterwell.utils.TodoException;
 import com.winterwell.utils.containers.ArrayMap;
-import winterwell.utils.containers.IOneShot;
 
 /**
  * See https://developer.linkedin.com/docs/share-on-linkedin

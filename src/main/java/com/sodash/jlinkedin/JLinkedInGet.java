@@ -9,7 +9,6 @@ import winterwell.json.JSONArray;
 import winterwell.json.JSONObject;
 import winterwell.utils.TodoException;
 import winterwell.utils.Utils;
-import com.winterwell.utils.containers.ArrayMap;
 import winterwell.utils.time.Time;
 
 import com.sodash.jlinkedin.fields.NetworkUpdateType;
@@ -25,6 +24,7 @@ import com.sodash.jlinkedin.model.LIModelBase;
 import com.sodash.jlinkedin.model.LIPostBase;
 import com.sodash.jlinkedin.model.LIUpdate;
 import com.sodash.jlinkedin.model.ListResults;
+import com.winterwell.utils.containers.ArrayMap;
 
 
 public class JLinkedInGet extends JLinkedInAPIFacet<JLinkedInGet> {

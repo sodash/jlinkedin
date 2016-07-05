@@ -1,18 +1,15 @@
 package com.sodash.jlinkedin.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import winterwell.json.JSONArray;
+import winterwell.json.JSONObject;
+import winterwell.utils.StrUtils;
 
 import com.sodash.jlinkedin.fields.ProfileField;
 import com.winterwell.jgeoplanet.IPlace;
 import com.winterwell.jgeoplanet.SimplePlace;
-import com.winterwell.utils.web.SimpleJson;
-
-import creole.data.XId;
-import winterwell.json.JSONArray;
-import winterwell.json.JSONObject;
-import winterwell.utils.StrUtils;
 
 public class LIProfile extends LIEntity {
 	

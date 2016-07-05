@@ -1,14 +1,10 @@
 package com.sodash.jlinkedin.model;
 
-import java.util.List;
-
-import com.sodash.jlinkedin.fields.NetworkUpdateReturnType;
-
 import winterwell.json.JSONObject;
-import winterwell.utils.StrUtils;
-import winterwell.utils.TodoException;
 import winterwell.utils.reporting.Log;
 import winterwell.utils.time.Time;
+
+import com.sodash.jlinkedin.fields.NetworkUpdateReturnType;
 
 public abstract class LIPostBase extends LIModelBase {
 

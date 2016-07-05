@@ -2,10 +2,10 @@ package com.sodash.jlinkedin.model;
 
 import java.util.List;
 
-import com.sodash.jlinkedin.fields.NetworkUpdateReturnType;
-
 import winterwell.json.JSONObject;
 import winterwell.utils.TodoException;
+
+import com.sodash.jlinkedin.fields.NetworkUpdateReturnType;
 
 /**
  * An event (something like making a connection, which can't really be described as a message).

@@ -5,7 +5,6 @@ import java.util.Set;
 
 import winterwell.utils.TodoException;
 
-import com.sodash.jlinkedin.fields.CompanyField;
 import com.sodash.jlinkedin.fields.FacetField;
 import com.sodash.jlinkedin.fields.ProfileField;
 import com.sodash.jlinkedin.fields.SearchParameter;

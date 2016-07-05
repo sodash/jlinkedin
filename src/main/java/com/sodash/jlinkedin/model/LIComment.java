@@ -3,14 +3,7 @@
  */
 package com.sodash.jlinkedin.model;
 
-import java.util.List;
-
 import winterwell.json.JSONObject;
-import winterwell.utils.StrUtils;
-import winterwell.utils.TodoException;
-import winterwell.utils.time.Time;
-
-import com.sodash.jlinkedin.fields.MessageType;
 
 
 /**

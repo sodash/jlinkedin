@@ -1,21 +1,15 @@
 package com.sodash.jlinkedin;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Test;
 
-import winterwell.json.JSONObject;
-import com.winterwell.utils.containers.ArrayMap;
-
 import com.sodash.jlinkedin.model.LIComment;
 import com.sodash.jlinkedin.model.LICompany;
+import com.sodash.jlinkedin.model.LIEvent;
 import com.sodash.jlinkedin.model.LIGroup;
 import com.sodash.jlinkedin.model.LIPostBase;
 import com.sodash.jlinkedin.model.LIUpdate;
-import com.sodash.jlinkedin.model.LIEvent;
 import com.sodash.jlinkedin.model.ListResults;
 
 public class JLinkedInGetTest {

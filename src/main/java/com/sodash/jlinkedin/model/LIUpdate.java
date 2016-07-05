@@ -1,14 +1,10 @@
 package com.sodash.jlinkedin.model;
 
-import java.util.List;
-
-import com.sodash.jlinkedin.JLinkedInGet;
-import com.winterwell.utils.web.SimpleJson;
-
 import winterwell.json.JSONObject;
 import winterwell.utils.StrUtils;
 import winterwell.utils.TodoException;
-import winterwell.utils.reporting.Log;
+
+import com.sodash.jlinkedin.JLinkedInGet;
 
 /**
  * A post / status-update / share. "Update" and "Share" are the terms LinkedIn API docs use. 
