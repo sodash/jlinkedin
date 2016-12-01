@@ -2,7 +2,7 @@ package com.sodash.jlinkedin;
 
 import org.junit.Test;
 
-import winterwell.utils.Utils;
+import com.winterwell.utils.Utils;
 
 import com.sodash.jlinkedin.model.LIPostRequest;
 import com.sodash.jlinkedin.model.LIUpdate;

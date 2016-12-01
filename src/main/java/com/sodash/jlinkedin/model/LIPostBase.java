@@ -1,8 +1,8 @@
 package com.sodash.jlinkedin.model;
 
-import winterwell.json.JSONObject;
-import winterwell.utils.reporting.Log;
-import winterwell.utils.time.Time;
+import com.winterwell.json.JSONObject;
+import com.winterwell.utils.log.Log;
+import com.winterwell.utils.time.Time;
 
 import com.sodash.jlinkedin.fields.NetworkUpdateReturnType;
 

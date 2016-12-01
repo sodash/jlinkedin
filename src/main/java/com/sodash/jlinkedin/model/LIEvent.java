@@ -2,8 +2,8 @@ package com.sodash.jlinkedin.model;
 
 import java.util.List;
 
-import winterwell.json.JSONObject;
-import winterwell.utils.TodoException;
+import com.winterwell.json.JSONObject;
+import com.winterwell.utils.TodoException;
 
 import com.sodash.jlinkedin.fields.NetworkUpdateReturnType;
 

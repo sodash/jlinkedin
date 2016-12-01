@@ -3,9 +3,9 @@ package com.sodash.jlinkedin.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import winterwell.json.JSONArray;
-import winterwell.json.JSONObject;
-import winterwell.utils.StrUtils;
+import com.winterwell.json.JSONArray;
+import com.winterwell.json.JSONObject;
+import com.winterwell.utils.StrUtils;
 
 import com.sodash.jlinkedin.fields.ProfileField;
 import com.winterwell.jgeoplanet.IPlace;

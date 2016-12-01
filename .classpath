@@ -20,7 +20,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/jgeoplanet.jar"/>
 	<classpathentry kind="lib" path="lib/jtwitter.jar"/>
-	<classpathentry kind="lib" path="lib/winterwell.utils.jar"/>
-	<classpathentry kind="lib" path="lib/winterwell.web.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/winterwell.utils"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/winterwell.web"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

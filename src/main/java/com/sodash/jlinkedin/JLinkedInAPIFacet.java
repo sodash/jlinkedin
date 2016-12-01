@@ -3,14 +3,13 @@ package com.sodash.jlinkedin;
 import java.util.Collection;
 import java.util.Map;
 
-import winterwell.json.JSONObject;
-import winterwell.utils.containers.IOneShot;
-
 import com.sodash.jlinkedin.fields.FieldEnum;
 import com.sodash.jlinkedin.model.LIProfile;
+import com.winterwell.json.JSONObject;
 import com.winterwell.utils.StrUtils;
 import com.winterwell.utils.Utils;
 import com.winterwell.utils.containers.ArrayMap;
+import com.winterwell.utils.containers.IOneShot;
 import com.winterwell.utils.web.SimpleJson;
 import com.winterwell.utils.web.WebUtils2;
 import com.winterwell.web.FakeBrowser;

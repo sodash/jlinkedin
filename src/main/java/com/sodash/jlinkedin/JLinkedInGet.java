@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import winterwell.json.JSONArray;
-import winterwell.json.JSONObject;
-import winterwell.utils.TodoException;
-import winterwell.utils.Utils;
-import winterwell.utils.time.Time;
+import com.winterwell.json.JSONArray;
+import com.winterwell.json.JSONObject;
+import com.winterwell.utils.TodoException;
+import com.winterwell.utils.Utils;
+import com.winterwell.utils.time.Time;
 
 import com.sodash.jlinkedin.fields.NetworkUpdateType;
 import com.sodash.jlinkedin.fields.PostSortOrder;

@@ -1,8 +1,8 @@
 package com.sodash.jlinkedin.model;
 
-import winterwell.json.JSONObject;
-import winterwell.utils.StrUtils;
-import winterwell.utils.TodoException;
+import com.winterwell.json.JSONObject;
+import com.winterwell.utils.StrUtils;
+import com.winterwell.utils.TodoException;
 
 import com.sodash.jlinkedin.JLinkedInGet;
 

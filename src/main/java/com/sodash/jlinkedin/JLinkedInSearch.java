@@ -3,7 +3,7 @@ package com.sodash.jlinkedin;
 import java.util.Map;
 import java.util.Set;
 
-import winterwell.utils.TodoException;
+import com.winterwell.utils.TodoException;
 
 import com.sodash.jlinkedin.fields.FacetField;
 import com.sodash.jlinkedin.fields.ProfileField;

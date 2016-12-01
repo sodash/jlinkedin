@@ -1,6 +1,6 @@
 package com.sodash.jlinkedin.model;
 
-import winterwell.json.JSONObject;
+import com.winterwell.json.JSONObject;
 
 public abstract class LIEntity extends LIModelBase {
 
